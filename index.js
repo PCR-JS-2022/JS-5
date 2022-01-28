@@ -21,7 +21,7 @@ class CoffeeMachine {
   /**
    * Запускает приготовление кофе
    * @param {Coffee} coffee - кофе, которое требуется приготовить
-   * @returns {Promise<Coffee>} - промис, который выполнится после приготовленя кофе
+   * @returns {Promise<Coffee>} - промис, который выполнится после приготовления кофе
    */
   createCoffee(coffee) {
   }
