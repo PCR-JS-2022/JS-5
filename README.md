@@ -19,6 +19,8 @@
 
 ### Пример работы кофемашины
 ```js
+const log = (coffee) => console.log(coffee.coffeName);
+
 const machine = new CoffeeMachine(2);
 
 const cappuccino = new Coffee('Капучино', 6000);
