@@ -2,10 +2,10 @@
 class Coffee {
   /**
    * Создаёт экзмепляр кофе
-   * @param {string} coffeName - название кофе
+   * @param {string} name - название кофе
    * @param {number} preparationTime - время приготовления кофе
    */
-  constructor(coffeName, preparationTime) {
+  constructor(name, preparationTime) {
   }
 }
 
@@ -26,3 +26,5 @@ class CoffeeMachine {
   createCoffee(coffee) {
   }
 }
+
+module.exports = { Coffee, CoffeeMachine };

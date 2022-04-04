@@ -1,0 +1,23 @@
+{
+  "name": "js-5",
+  "version": "1.0.0",
+  "description": "Друг Кеши Борис (тот самый вредный товарищ, который раскритиковал сайт с фотографиями) уже давно мечтает открыть свою кофейню. В этом году он скопил достаточный капитал и уже нашел помещение, которое вот-вот возьмет в аренду.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./__tests__/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PCR-JS-2022/JS-5.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PCR-JS-2022/JS-5/issues"
+  },
+  "homepage": "https://github.com/PCR-JS-2022/JS-5#readme",
+  "devDependencies": {
+    "assert": "^2.0.0",
+    "mocha": "^9.2.2"
+  }
+}
