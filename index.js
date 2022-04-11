@@ -38,7 +38,7 @@ class CoffeeMachine {
         
         if (this.wearLevel === 0){
           reject(coffee);
-          return coffee;
+          return promise1;
         }
  
         setTimeout(()=>{
