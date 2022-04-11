@@ -72,3 +72,5 @@ class CoffeeMachine {
     })
   }
 }
+
+module.exports = { Coffee, CoffeeMachine };
