@@ -34,7 +34,7 @@ class CoffeeMachine {
         this.maxCup--;
         this.wearLevel--;
   
-        var promise1 = new Promise ((resolve, reject) => {
+        const promise1 = new Promise ((resolve, reject) => {
   
           if (this.wearLevel === 0){
             reject(coffee);
