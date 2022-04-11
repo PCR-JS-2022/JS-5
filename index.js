@@ -33,9 +33,7 @@ class CoffeeMachine {
 
   doesTheMachineWork() {
     if (this.wearLevel <= 1 && this.coffeeFuture.length) {
-      setTimeout(() => {
-        throw new Error('Не получилось поставить кофе в очередь машинка сломалась');
-      }, this.coffeeFuture.pop().coffee.preparationTime);
+      throw new Error('Не получилось поставить кофе в очередь машинка сломалась');
     }
   }
   /**
@@ -74,5 +72,3 @@ class CoffeeMachine {
     })
   }
 }
-
-module.exports = { Coffee, CoffeeMachine };
