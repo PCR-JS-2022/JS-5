@@ -47,20 +47,18 @@ class CoffeeMachine {
     else {
         setTimeout(() => {},this.lastCup.preparationTime);
     }
-    const promise = new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
         if (this.wearLevel > 0) {
-        setTimeout(() => {
-            resolve(coffee);
-            this.queue.filter((elem => elem.createTime !== coffee.createTime));
             this.wearLevel -= 1;
+            setTimeout(() => {
+                resolve(coffee);
+                this.queue.filter((elem => elem.createTime !== coffee.createTime));
             }, coffee.preparationTime);
-        }
-        else {
+        } else {
             reject(coffee);
             this.queue.filter((elem => elem.createTime !== coffee.createTime));
         }
-    })
-    return promise;
+    });
   }
 }
 
