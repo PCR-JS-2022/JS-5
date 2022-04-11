@@ -18,9 +18,9 @@ class CoffeeMachine {
      * @param {number} maxCup - кол-во чашек, в которые параллельно можно готовить кофе
      * @param {number} wearLevel - уровень износа кофемашины
      */
-    constructor(maxCup, wearLevel) {
+    constructor(maxCup, wearLevel = 4) {
         this.maxCup = maxCup;
-        this.wearLevel = 4;
+        this.wearLevel = wearLevel;
         this.queue = [];
     }
 
@@ -33,7 +33,7 @@ class CoffeeMachine {
         if (!coffee instanceof Coffee) throw new Error();
 
         let cupOfCoffee = new Promise(async (resolve, reject) => {
-            if (this.wearLevel < 1) {
+            if (this.wearLevel <= 0) {
                 reject(coffee);
             }
             if (this.queue.length < this.maxCup) {
