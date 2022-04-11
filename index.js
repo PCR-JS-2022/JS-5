@@ -1,12 +1,16 @@
-/** Класс кофе */
 class Coffee {
-  /**
-   * Создаёт экзмепляр кофе
-   * @param {string} name - название кофе
-   * @param {number} preparationTime - время приготовления кофе
-   */
-  constructor(name, preparationTime) {
-  }
+	/**
+	 * @param {string} name
+	 * @param {number} preparationTime
+	 */
+	constructor(name, preparationTime) {
+		if (!(typeof name === 'string' && name && typeof preparationTime === 'number' && preparationTime > 0)) {
+			throw new Error("Invalid input data");
+		}
+
+		this.name = name;
+		this.preparationTime = preparationTime;
+	}
 }
 
 /** Класс кофемашины */
