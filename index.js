@@ -21,6 +21,7 @@ class CoffeeMachine {
     this.maxCup = maxCup;
     this.freeCaps = maxCup;
     this.queue = [];
+    this.wearLevel = 4;
   }
 
   /**
@@ -30,8 +31,12 @@ class CoffeeMachine {
    */
   createCoffee(coffee) {
     const promise = new Promise((resolve, reject) => {
+      if(this.wearLevel <= 0) {
+        reject(coffee);
+      }
       if(this.freeCaps > 0) {
         this.freeCaps--;
+        this.wearLevel--;
 
         setTimeout(() => {
           this.freeCaps++;
@@ -41,11 +46,15 @@ class CoffeeMachine {
         this.queue.push({coffee, resolve, reject});
       }
     }).finally(() => {
+      if(this.wearLevel <= 0) {
+        this.queue.forEach(i => i.reject(i.coffee));
+      } 
       if(this.queue.length > 0) {
         if (this.freeCaps > 0) {
           const first = this.queue[0];
           this.queue = this.queue.slice(1);
           this.freeCaps--;
+          this.wearLevel--;
           
           setTimeout(() => {
             this.freeCaps++;
