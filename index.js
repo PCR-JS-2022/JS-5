@@ -5,7 +5,7 @@ class Coffee {
     if (!name === 'string' || !name)
      throw new Error ('Не верный формат имени');
 
-    if (!preparationTime === 'number' || preparationTime <= 0)
+    if (!preparationTime === 'number' || preparationTime < 0)
      throw new Error ('Не верный формат времени');
 
      this.name = name;
