@@ -49,15 +49,11 @@ class CoffeeMachine {
     }
     const promise = new Promise((resolve,reject) => {
         if (this.wearLevel > 0) {
-        const time = this.queue.reduce((time, elem) => {
-            time += elem.preparationTime;
-            return time;
-        })
         setTimeout(() => {
             resolve(coffee);
             this.queue.filter((elem => elem.createTime !== coffee.createTime));
             this.wearLevel -= 1;
-            }, coffee.preparationTime + time);
+            }, coffee.preparationTime);
         }
         else {
             reject(coffee);
