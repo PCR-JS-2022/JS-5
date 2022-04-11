@@ -17,11 +17,11 @@ class CoffeeMachine {
    * Создаёт экзмепляр кофемашины
    * @param {number} maxCup - кол-во чашек, в которые параллельно можно готовить кофе
    */
-  constructor(maxCup) {
+  constructor(maxCup, wearLevel = 4) {
     this.maxCup = maxCup;
     this.freeCaps = maxCup;
     this.queue = [];
-    this.wearLevel = 4;
+    this.wearLevel = wearLevel;
   }
 
   /**
@@ -46,20 +46,21 @@ class CoffeeMachine {
         this.queue.push({coffee, resolve, reject});
       }
     }).finally(() => {
-      if(this.wearLevel <= 0) {
-        this.queue.forEach(i => i.reject(i.coffee));
-      } 
       if(this.queue.length > 0) {
-        if (this.freeCaps > 0) {
-          const first = this.queue[0];
-          this.queue = this.queue.slice(1);
-          this.freeCaps--;
-          this.wearLevel--;
-          
-          setTimeout(() => {
-            this.freeCaps++;
-            first.resolve(first.coffee);
-          }, first.coffee.preparationTime);
+        if(this.wearLevel <= 0) {
+          this.queue.forEach(i => i.reject(i.coffee));
+        } else {
+          if (this.freeCaps > 0) {
+            const first = this.queue[0];
+            this.queue = this.queue.slice(1);
+            this.freeCaps--;
+            this.wearLevel--;
+            
+            setTimeout(() => {
+              this.freeCaps++;
+              first.resolve(first.coffee);
+            }, first.coffee.preparationTime);
+          }
         }
       }
     })
