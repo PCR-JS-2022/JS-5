@@ -1,6 +1,4 @@
 /** Класс кофе */
-const {rejects} = require("assert");
-
 class Coffee {
     /**
      * Создаёт экзмепляр кофе
