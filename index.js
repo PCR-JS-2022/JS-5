@@ -13,22 +13,52 @@ class Coffee {
 	}
 }
 
-/** Класс кофемашины */
 class CoffeeMachine {
-  /**
-   * Создаёт экзмепляр кофемашины
-   * @param {number} maxCup - кол-во чашек, в которые параллельно можно готовить кофе
-   */
-  constructor(maxCup) {
-  }
+	/**
+	 * @param {number} maxCup
+	 * @param {number} wearLevel
+	 */
+	constructor(maxCup, wearLevel = 4) {
+		if (!(typeof maxCup === 'number' && maxCup > 0 && typeof wearLevel === 'number')) {
+			throw new Error("Invalid input data");
+		}
 
-  /**
-   * Запускает приготовление кофе
-   * @param {Coffee} coffee - кофе, которое требуется приготовить
-   * @returns {Promise<Coffee>} - промис, который выполнится после приготовления кофе
-   */
-  createCoffee(coffee) {
-  }
+		this.maxCup = maxCup;
+		this.wearLevel = wearLevel;
+		this._promiseQueue = [];
+		this._ids = 0;
+	}
+
+	/**
+	 * @param {Coffee} coffee
+	 * @returns {Promise<Coffee>}
+	 */
+	async createCoffee(coffee) {
+		if (!(coffee instanceof Coffee)) {
+			throw new Error("Invalid input data");
+		}
+
+		const id = this._ids;
+		const promise = new Promise(async (resolve, reject) => {
+			if (this.wearLevel <= 0) {
+				reject(coffee);
+				return;
+			}
+
+			if (this._promiseQueue.length >= this.maxCup) {
+				await Promise.race(this._promiseQueue.map(p => p.promise));
+			}
+			setTimeout(() => {
+				this._promiseQueue = this._promiseQueue.filter(p => p.id !== id);
+				resolve(coffee);
+			}, coffee.preparationTime);
+		})
+
+		this.wearLevel--;
+		this._ids++;
+		this._promiseQueue.push({ id, promise });
+		return promise;
+	}
 }
 
 module.exports = { Coffee, CoffeeMachine };
