@@ -5,8 +5,8 @@ class Coffee {
     if (!name === 'string' || !name)
      throw new Error ('Не верный формат имени');
 
-    if (!preparationTime === 'number' || preparationTime <= 0)
-     throw new Error (`Не верный формат времени ${preparationTime}`);
+    if (!preparationTime === 'number' || preparationTime < 0)
+     throw new Error (`Не верный формат времени`);
 
      this.name = name;
      this.preparationTime = preparationTime;
@@ -28,33 +28,247 @@ class CoffeeMachine {
     if (!coffee instanceof Coffee)
 			throw new Error('Входные данные не корректны');
 
-    if (this.maxCup > 0){
-      this.timeouts.push(coffee.preparationTime);
-      this.timeouts.sort();
-      this.maxCup--;
-      this.wearLevel--;
-      
-      var promise1 = new Promise ((resolve, reject) => {
-        
-        if (this.wearLevel === 0){
-          reject(coffee);
-          return;
-        }
- 
-        setTimeout(()=>{
+      if (this.maxCup > 0){
+        this.timeouts.push(coffee.preparationTime);
+        this.timeouts.sort();
+        this.maxCup--;
+        this.wearLevel--;
+  
+        var promise1 = new Promise ((resolve, reject) => {
+  
+          if (this.wearLevel === 0){
+            reject(coffee);
+          }
+  
+          setTimeout(()=>{
+            resolve(coffee);
+          },coffee.preparationTime);
+        })
+  
+        promise1.then((value) => {
           this.maxCup++;
           this.timeouts.splice(0, 1);
-          resolve(coffee);
-        },coffee.preparationTime);
-      })
-    }
-    else {
-      setTimeout(() => {
-        this.createCoffee(coffee)}, this.timeouts[0]
-      );
+          return promise1;
+        })
+  
+        promise1.catch((value) => {
+          return promise1;
+  
+        })
+      }
+      else {
+        setTimeout(() => {
+          this.createCoffee(coffee)}, this.timeouts[0]
+        );
+      };
     };
-    return promise1
-  };
 }
 
 module.exports = { Coffee, CoffeeMachine };
+
+
+const machine = new CoffeeMachine(250);
+
+const cappuccino = new Coffee('Капучино', 6000);
+const latte = new Coffee('Латте', 1000);
+const americano = new Coffee('Американо', 3000);
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
+machine.createCoffee(americano)
