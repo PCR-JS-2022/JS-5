@@ -1,4 +1,3 @@
-
 class Coffee {
 
   constructor(name, preparationTime) {
@@ -42,22 +41,14 @@ class CoffeeMachine {
         
         if (this.wearLevel === 0){
           reject(coffee);
+          return;
         }
  
         setTimeout(()=>{
+          this.maxCup++;
+          this.timeouts.splice(0, 1);
           resolve(coffee);
         },coffee.preparationTime);
-      })
-              
-      promise1.then((value) => {
-        this.maxCup++;
-        this.timeouts.splice(0, 1);
-        return value;
-      })
-      
-      promise1.catch((value) => {
-        return value;
-
       })
     }
     else {
@@ -65,8 +56,8 @@ class CoffeeMachine {
         this.createCoffee(coffee)}, this.timeouts[0]
       );
     };
+    return promise1
   };
 }
 
 module.exports = { Coffee, CoffeeMachine };
-
