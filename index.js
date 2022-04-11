@@ -6,25 +6,8 @@ class Coffee {
    * @param {number} preparationTime - время приготовления кофе
    */
   constructor(name, preparationTime) {
-    const isArgumentsValid = this.#isArgumentsValid(name, preparationTime);
-    if (!isArgumentsValid) {
-      throw new TypeError('Invalid arguments given');
-    }
-
     this.name = name;
     this.preparationTime = preparationTime;
-  }
-
-  #isArgumentsValid = (name, preparationTime) => {
-    if (!name || typeof name !== 'string' || name.trim().length === 0) {
-      return false;
-    }
-
-    if (!preparationTime || typeof preparationTime !== 'number') {
-      return false;
-    }
-
-    return true;
   }
 }
 
