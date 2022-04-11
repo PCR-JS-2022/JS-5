@@ -6,6 +6,8 @@ class Coffee {
    * @param {number} preparationTime - время приготовления кофе
    */
   constructor(name, preparationTime) {
+    this.name = name;
+    this.preparationTime = preparationTime;
   }
 }
 
@@ -15,7 +17,10 @@ class CoffeeMachine {
    * Создаёт экзмепляр кофемашины
    * @param {number} maxCup - кол-во чашек, в которые параллельно можно готовить кофе
    */
-  constructor(maxCup) {
+  constructor(maxCup, wearLevel = 4) {
+    this.maxCup = maxCup;
+    this.wearLevel = wearLevel;
+    this.orders = [];
   }
 
   /**
@@ -23,7 +28,25 @@ class CoffeeMachine {
    * @param {Coffee} coffee - кофе, которое требуется приготовить
    * @returns {Promise<Coffee>} - промис, который выполнится после приготовления кофе
    */
-  createCoffee(coffee) {
+  async createCoffee(coffee) {
+    const promise = new Promise(async (resolve, reject) => {
+      if (this.wearLevel <= 0) {
+        reject(coffee);
+        throw new Error('Кофе-машина пришла в негодность');
+      }
+      if (this.wearLevel > 0) {
+        this.wearLevel--;
+        if (this.orders.length >= this.maxCup) {
+          await Promise.race(this.orders);
+        }
+        setTimeout(() => {
+          this.orders.shift();
+          resolve(coffee);
+        }, coffee.preparationTime);
+      }
+    });
+    this.orders.push(promise);
+    return promise;
   }
 }
 
