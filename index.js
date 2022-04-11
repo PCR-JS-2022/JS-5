@@ -4,7 +4,7 @@ class Coffee {
 	 * @param {number} preparationTime
 	 */
 	constructor(name, preparationTime) {
-		if (!(typeof name === 'string' && name && typeof preparationTime === 'number' && preparationTime > 0)) {
+		if (!(typeof name === 'string' && name && typeof preparationTime === 'number' && preparationTime >= 0)) {
 			throw new Error("Invalid input data");
 		}
 
@@ -19,7 +19,7 @@ class CoffeeMachine {
 	 * @param {number} wearLevel
 	 */
 	constructor(maxCup, wearLevel = 4) {
-		if (!(typeof maxCup === 'number' && maxCup > 0 && typeof wearLevel === 'number')) {
+		if (!(typeof maxCup === 'number' && maxCup >= 0 && typeof wearLevel === 'number')) {
 			throw new Error("Invalid input data");
 		}
 
