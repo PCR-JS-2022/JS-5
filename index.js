@@ -70,5 +70,3 @@ class CoffeeMachine {
 
 module.exports = { Coffee, CoffeeMachine };
 
-const machine = new CoffeeMachine(2);
-
