@@ -18,9 +18,6 @@ class CoffeeMachine {
 
   constructor(maxCup, wearLevel = 4) {
 
-    if (!maxCup === 'number' || !maxCup)
-      throw new Error('Не верный формат данных');
-
     this.maxCup = maxCup;
     this.wearLevel = wearLevel;
     this.timeouts = [];
