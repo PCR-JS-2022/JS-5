@@ -32,19 +32,23 @@ class CoffeeMachine {
    * @returns {Promise<Coffee>} - промис, который выполнится после приготовления кофе
    */
   createCoffee(coffee) {
+    const createCoffeeNow = ({ coffee, resolve }) => {
+      this.availableCups--;
+      this.wearLevel--;
+
+      setTimeout(() => {
+        this.availableCups++;
+        resolve(coffee);
+      }, coffee.preparationTime);
+    };
+
     const coffeePromise = new Promise((resolve, reject) => {
       if (this.wearLevel <= 0) {
         reject(coffee);
       }
 
       if (this.availableCups > 0) {
-        this.availableCups--;
-        this.wearLevel--;
-
-        setTimeout(() => {
-          this.availableCups++;
-          resolve(coffee);
-        }, coffee.preparationTime);
+        createCoffeeNow({ coffee, resolve });
 
       } else {
         this.queue.push({ coffee, resolve, reject });
@@ -60,15 +64,7 @@ class CoffeeMachine {
         } else {
           if (this.availableCups > 0) {
             const firstInQueue = this.queue.shift();
-
-            this.availableCups--;
-            this.wearLevel--;
-
-            setTimeout(() => {
-              this.availableCups++;
-              firstInQueue.resolve(firstInQueue.coffee);
-            }, firstInQueue.coffee.preparationTime);
-
+            createCoffeeNow(firstInQueue);
           }
         }
 
