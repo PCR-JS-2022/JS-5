@@ -47,8 +47,7 @@ class CoffeeMachine {
       const timeout = setInterval(() => {
         if (this.isBroken()) {
           reject(coffee);
-          console.log('Кофемашина сломалась');
-          return;
+          throw new Error('Кофемашина сломалась');
         }
         if (this.accessibleSlots()) {
           this.maxCup -= 1;
@@ -61,11 +60,10 @@ class CoffeeMachine {
         }
       }, 50);
     }
-    return new Promise(function (resolve, reject) {
-      callback(resolve, reject);
-    });
+    return new Promise(callback);
   }
 }
+
 
 
 module.exports = { Coffee, CoffeeMachine };
