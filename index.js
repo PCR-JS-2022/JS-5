@@ -16,7 +16,11 @@ class Coffee {
 
 class CoffeeMachine {
 
-  constructor(maxCup, wearLevel = 10) {
+  constructor(maxCup, wearLevel = 4) {
+
+    if (!typeof maxCup === 'number') {
+      throw new Error('Не верный формат данных');
+    }
 
     this.maxCup = maxCup;
     this.wearLevel = wearLevel;
