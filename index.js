@@ -16,45 +16,41 @@ class Coffee {
 
 class CoffeeMachine {
 
-  constructor(maxCup, wearLevel = 4) {
+  constructor(maxCup, wearLevel = 10) {
 
     this.maxCup = maxCup;
     this.wearLevel = wearLevel;
-    this.timeouts = [];
+    this.cupStack = []
   }
 
   createCoffee(coffee) {
-    
-    if (!coffee instanceof Coffee)
-			throw new Error('Входные данные не корректны');
 
-    if (this.maxCup > 0){
-      this.timeouts.push(coffee.preparationTime);
-      this.timeouts.sort();
-      this.maxCup--;
-      this.wearLevel--;
-      
-      var promise1 = new Promise ((resolve, reject) => {
-        
-        if (this.wearLevel === 0){
-          reject(coffee);
-          return promise1;
-        }
- 
-        setTimeout(()=>{
-          this.maxCup++;
-          this.timeouts.splice(0, 1);
-          resolve(coffee);
-        },coffee.preparationTime);
-      })
-    }
-    else {
-      setTimeout(() => {
-        this.createCoffee(coffee)}, this.timeouts[0]
-      );
+    if (!(coffee instanceof Coffee)) {
+        throw new Error('Передан не объект кофе!');
     };
-    return promise1
-  };
+
+    const promise = new Promise(async (resolve, reject) => {
+
+        if (this.wearLevel > 0) {
+            this.wearLevel--;
+
+            if (this.cupStack.length > this.maxCup) {
+              Promise.race(this.cupStack.map((promis) => promis))
+            }
+
+            setTimeout(() => {
+                this.cupStack.shift()
+                resolve(coffee);
+            }, coffee.preparationTime);
+
+        } else {
+            reject(coffee);
+        };
+
+    });
+    this.cupStack.push(promise);
+    return promise;
+  }   
 }
 
 module.exports = { Coffee, CoffeeMachine };
