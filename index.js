@@ -35,9 +35,9 @@ class CoffeeMachine {
 
             if (this.maxCup > 0) {
                 this.maxCup--;
+                this.wearLevel--;
 
                 setTimeout(() => {
-                        this.wearLevel--;
                         this.maxCup++;
                         resolve(coffee);
                     },
@@ -47,11 +47,11 @@ class CoffeeMachine {
             }
         }).finally(() => {
             if (this.maxCup > 0 && this.queue.length > 0 && this.wearLevel > 0) {
-                const first = this.queue[0];
+                const first = this.queue.shift();
                 this.maxCup--;
+                this.wearLevel--;
 
                 setTimeout(() => {
-                    this.wearLevel--;
                     this.maxCup++;
                     first.resolve(first.coffee)
                 }, first.coffee.preparationTime);
