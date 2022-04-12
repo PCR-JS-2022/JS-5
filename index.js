@@ -59,7 +59,7 @@ class CoffeeMachine {
           }, coffee.preparationTime);
           clearInterval(timeout);
         }
-      }, 1000);
+      }, 200);
     }
     return new Promise(callback);
   }
