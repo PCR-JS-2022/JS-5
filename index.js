@@ -55,7 +55,7 @@ class CoffeeMachine {
       if (this.wearLevel <= 0) {
         reject(coffee)
       }
-      while (this.maxCup <= this.queue.length) {
+      if (this.maxCup <= this.queue.length) {
         await Promise.race(this.queue.map((cf) => cf.promise))
       }
       setTimeout(() => {
