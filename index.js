@@ -24,13 +24,14 @@ class CoffeeMachine {
     if (typeof wearLevel !== 'number')
       throw new Error('Неверный износ кофемашины');
     this.maxCup = maxCup;
+    this.beingCoffee = [];
     this.wearLevel = wearLevel;
   }
   isBroken() {
-    return this.wearLevel <= 1;
+    return this.wearLevel <= 0;
   }
   accessibleSlots() {
-    return this.maxCup >= 1;
+    return this.beingCoffee.length >= this.maxCup;
   }
   isCoffee(coffee) {
     if (!(coffee instanceof Coffee))
@@ -43,24 +44,24 @@ class CoffeeMachine {
    */
   createCoffee(coffee) {
     this.isCoffee(coffee);
-    const callback = (resolve, reject) => {
-      const timeout = setInterval(() => {
-        if (this.isBroken()) {
-          reject(coffee);
-          throw new Error('Кофемашина сломалась');
-        }
-        if (this.accessibleSlots()) {
-          this.maxCup -= 1;
-          setTimeout(() => {
-            resolve(coffee);
-            this.maxCup += 1;
-            this.wearLevel -= 1;
-          }, coffee.preparationTime);
-          clearInterval(timeout);
-        }
-      }, 50);
-    }
-    return new Promise(callback);
+    const promise = new Promise(async (resolve, reject) => {
+      if (this.isBroken()) {
+        reject(coffee);
+        console.log(`Не получилось приготовить ${coffee.name}. Кофемашина сломалась`);
+      }
+
+      if (this.accessibleSlots()) {
+        await Promise.race(this.beingCoffee);
+        this.beingCoffee.shift();
+      }
+      setTimeout(() => {
+        resolve(coffee);
+      }, coffee.preparationTime);
+    });
+
+    this.wearLevel -= 1;
+    this.beingCoffee.push(promise);
+    return promise;
   }
 }
 
