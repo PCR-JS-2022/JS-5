@@ -57,7 +57,7 @@ class CoffeeMachine {
   createCoffee(coffee) {
     this.isCoffee(coffee);
 
-     const promise = new Promise((resolve, reject) => {
+     const promise = new Promise(async(resolve, reject) => {
        if (this.isBroken()) {
          reject(coffee);
          return;
