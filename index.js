@@ -42,7 +42,7 @@ class CoffeeMachine {
             }
 
             setTimeout(() => {
-                this.coffeeQueue = this.coffeeQueue.filter((x) => x.id != id);
+                this.coffeeQueue = this.coffeeQueue.filter((x) => x.id !== id);
                 return coffee;
             }, coffee.preparationTime);
         });
