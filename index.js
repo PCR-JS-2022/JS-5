@@ -19,7 +19,8 @@ class CoffeeMachine {
      */
     constructor(maxCup) {
         this.maxCup = maxCup;
-        this.workingPromiseArray = [];
+        this.coffeeQueue = [];
+        this.idCounter = 0;
     }
 
     /**
@@ -28,21 +29,23 @@ class CoffeeMachine {
      * @returns {Promise<Coffee>} - промис, который выполнится после приготовления кофе
      */
     createCoffee(coffee) {
-        if (this.workingPromiseArray.length === this.maxCup)
-          Promise.any(this.workingPromiseArray);
+        const id = this.idCounter++;
 
-        const promise = new Promise(() => {
+        const promise = new Promise(async () => {
+            if (this.maxCup <= this.coffeeQueue.length) {
+                await Promise.any(this.coffeeQueue.map((x) => x.promise));
+                while (
+                    this.coffeeQueue.findIndex((x) => x.id === id) > this.maxCup
+                ) {
+                    await Promise.any(this.coffeeQueue.map((x) => x.promise));
+                }
+            }
+
             setTimeout(() => {
+                this.coffeeQueue.filter((x) => x.id != id);
                 return coffee;
             }, coffee.preparationTime);
         });
-
-        const promiseIndex = this.workingPromiseArray.length;
-        this.workingPromiseArray.push(promise);
-
-        Promise.any([promise]);
-
-        this.workingPromiseArray = this.workingPromiseArray.splice(promiseIndex, 1);
 
         return promise;
     }
