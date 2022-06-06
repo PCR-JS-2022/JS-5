@@ -31,7 +31,7 @@ class CoffeeMachine {
     createCoffee(coffee) {
         const id = this.idCounter++;
 
-        const promise = new Promise(async () => {
+        const promise = new Promise(async (resolve) => {
             if (this.maxCup <= this.coffeeQueue.length) {
                 await Promise.any(this.coffeeQueue.map((x) => x.promise));
                 while (
@@ -43,7 +43,7 @@ class CoffeeMachine {
 
             setTimeout(() => {
                 this.coffeeQueue = this.coffeeQueue.filter((x) => x.id !== id);
-                return coffee;
+                resolve(coffee);
             }, coffee.preparationTime);
         });
 
