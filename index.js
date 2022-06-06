@@ -47,6 +47,8 @@ class CoffeeMachine {
             }, coffee.preparationTime);
         });
 
+        this.coffeeQueue.push({ id, promise: promise });
+
         return promise;
     }
 }
