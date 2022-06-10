@@ -51,7 +51,7 @@ class CoffeeMachine {
       } else {
         this.queue.push({ coffee, resolve, reject });
       }
-    }).then(() => {
+    }).finally(() => {
       if (this.queue.length) {
         if (this.wearLevel < 0) {
           this.queue.forEach((item) => item.reject(item.coffee));
