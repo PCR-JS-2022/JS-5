@@ -65,8 +65,8 @@ class CoffeeMachine {
 
             setTimeout(() => {
               this.exsistCups++;
-              first.resolve(firstNum.coffee);
-            }, first.coffee.preparationTime);
+              firstNum.resolve(firstNum.coffee);
+            }, firstNum.coffee.preparationTime);
           }
         }
       }
