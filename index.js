@@ -6,7 +6,7 @@ class Coffee {
    * @param {number} preparationTime - время приготовления кофе
    */
   constructor(name, preparationTime) {
-    if (this.name !== "string" || this.preparationTime !== "number") {
+    if (typeof this.name !== "string" || typeof this.preparationTime !== "number") {
       throw new Error();
     }
 
